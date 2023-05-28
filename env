@@ -1,0 +1,48 @@
+##Local Development Setup
+#FastApi Configuration
+FASTAPI_CONFIG=testing
+SECRET_KEY=22b2abf1b7d36720e3838f111ba8f2aef227bea24b985a4ec766b706d1be5c22b94130fea9624bc21ae1847a4e25741f46bfe26da1e64f8086bc65ab678f9e69728a4bbce464bf6004557d2781d21d73e5f31baa1cb62e7d89e96a47c8548b9e7937d0d1143c5ba7f859a36b7deb3aab8cbd49c58d20a7dd32fbe887e2f0d269
+# Postgres Database Configuration
+DB_HOST: database host ip address
+DB_PORT: database host port number
+DB_USER: database user
+DB_PASSWORD: database user password
+DB_NAME: database name
+# Redis Server Configuration
+REDIS_SERVER: redis server
+REDIS_PORT: redis port
+REDIS_PASSWORD: redis password
+# Mail Server Configuration
+MAIL_SERVER: mail server smtp configuration
+MAIL_SERVER_PORT: mail server port
+DEFAULT_MAIL_SENDER_ADDRESS: mail address for sending logs
+DEFAULT_MAIL_SENDER_PASSWORD: mail address password
+DEFAULT_MAIL_SENDER: default name for sending mails
+ADMIN_MAIL_ADDRESSES: mail addresses for receiving mails
+# Kafka Server Config
+KAFKA_BOOTSTRAP_SERVERS: kafka bootstrap servers
+KAFKA_SERVER_USERNAME: kafka server user name
+KAFKA_SERVER_PASSWORD: kafka server user password
+KAFKA_SUBSCRIPTIONS: kafka topics to subscribe
+
+##Docker Compose Configuration
+##Application
+#FASTAPI_CONFIG=development
+#SECRET_KEY=secret_key
+## Postgres
+#DB_HOST=backend_db
+#DB_PORT=5432
+#DB_USER=db_user
+#DB_PASSWORD=db_password
+#DB_NAME=db_name
+## Redis
+#REDIS_SERVER=redis
+#REDIS_PORT=6379
+#REDIS_PASSWORD=redis_password
+## Mail Server
+#MAIL_SERVER=mail_server
+#MAIL_SERVER_PORT=mail_server_port
+#DEFAULT_MAIL_SENDER_ADDRESS=default_mail_sender_address
+#DEFAULT_MAIL_SENDER_PASSWORD=default_mail_sender_password
+#DEFAULT_MAIL_USERNAME=default_mail_username
+#ADMIN_MAIL_ADDRESSES=admin_mail_addresses

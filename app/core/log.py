@@ -25,8 +25,8 @@ def get_error_context(
     module: str,
     method: str,
     error: str,
-    calling_method: Optional[str] = None,
-    calling_module: Optional[str] = None,
+    calling_method: Any,
+    calling_module: Any,
     exc_class: Optional[str] = None,
 ) -> Dict[str, Any]:
     """

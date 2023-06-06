@@ -1,1 +1,2 @@
-from .sample_model import SampleModel
+from .user_model import UserModel
+from .user_otp_model import UserOtpModel

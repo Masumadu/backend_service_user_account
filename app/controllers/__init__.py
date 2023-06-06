@@ -1,1 +1,1 @@
-from .sample_controller import SampleController
+from .user_controller import UserController

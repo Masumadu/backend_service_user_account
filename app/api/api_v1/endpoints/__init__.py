@@ -1,1 +1,1 @@
-from .sample_view import sample_base_url, sample_router
+from .user_view import user_base_url, user_router

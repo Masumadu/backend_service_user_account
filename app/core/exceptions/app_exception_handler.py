@@ -1,5 +1,3 @@
-from typing import Optional
-
 from fastapi import HTTPException, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -8,26 +6,18 @@ from sqlalchemy.exc import DBAPIError
 from .app_exceptions import AppExceptionCase
 
 
-def exception_message(
-    error: str, message: str, internal_code: int, internal_message: Optional[str] = None
-) -> dict:
+def exception_message(error: str, message: str, internal_code: int) -> dict:
     """
     Exception message returned by the application when an error occurs.
 
     :param error: The type of error.
     :param message: The error message.
     :param internal_code: The internal error code.
-    :param internal_message: Any additional useful message.
 
     :return: A dictionary containing the error information.
     :rtype: dict
     """
-    return {
-        "error": error,
-        "message": message,
-        "internal_code": internal_code,
-        "internal_message": internal_message,
-    }
+    return {"error": error, "message": message, "internal_code": internal_code}
 
 
 def http_exception_handler(exc: HTTPException) -> JSONResponse:
@@ -107,7 +97,6 @@ def app_exception_handler(exc: AppExceptionCase) -> JSONResponse:
             error=exc.exception_case,
             message=exc.error_message,
             internal_code=exc.status_code,
-            internal_message=exc.context,
         ),
         status_code=exc.status_code,
         media_type="application/json",

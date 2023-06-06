@@ -11,7 +11,13 @@ ENV_ERROR = "invalid environment: {}"
 # Assertion Definitions
 ASSERT_DICT_OBJECT = "object is not a dict"
 ASSERT_LIST_OBJECT = "object is not a list"
-ASSERT_NULL_OBJECT = "object cannot be null"
+ASSERT_NULL_OBJECT = "object is null"
 
 # Exception Messages
-EXC_NOT_FOUND = "object not found"
+EXC_NOT_FOUND = "{} not found"
+EXC_FOUND = "{} exists"
+EXC_INVALID_INPUT = "invalid {}"
+EXC_EXPIRED_INPUT = "{} has expired"
+
+# factory settings
+MASTER_OTP_CODE = ["123456"]

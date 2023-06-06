@@ -15,7 +15,7 @@ class KeycloakJwtAuthentication(HTTPBearer):
         credentials: HTTPAuthorizationCredentials = await super().__call__(request)
         if credentials:
             if not credentials.scheme == "Bearer":
-                raise AppException.Unauthorized(
+                raise AppException.UnauthorizedException(
                     error_message="invalid authentication scheme"
                 )
             return self.decode_token(token=credentials.credentials)
@@ -28,8 +28,8 @@ class KeycloakJwtAuthentication(HTTPBearer):
                 key=settings.jwt_public_key,
                 algorithms=settings.jwt_algorithms,
                 audience="account",
-                issuer=f"{settings.keycloak_uri}/auth/realms/{settings.keycloak_realm}",
+                issuer=f"{settings.keycloak_uri}/realms/{settings.keycloak_realm}",
             )
             return payload
         except PyJWTError as exc:
-            raise AppException.OperationError(error_message=exc.args)
+            raise AppException.InvalidTokenException(error_message=exc.args)

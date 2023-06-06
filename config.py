@@ -36,9 +36,13 @@ class BaseConfig(BaseSettings):
     kafka_server_password: str = ""
     kafka_subscriptions: str = ""
     kafka_consumer_group_id: str = "FASTAPI_GROUP"
-    # keycloak server config
+    # KEYCLOAK CONFIGURATION
+    keycloak_client_id: str = ""
+    keycloak_client_secret: str = ""
     keycloak_uri: str = ""
     keycloak_realm: str = ""
+    keycloak_admin_username: str = ""
+    keycloak_admin_password: str = ""
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):  # noqa

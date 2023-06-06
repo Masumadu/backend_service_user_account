@@ -161,12 +161,13 @@ class AppException:
         """
         Exception to catch errors caused by failure to connect to external services.
 
+        :param status_code: The status code returned from the request.
+        :type status_code: int
         :param error_message: The message returned from the request.
         :type error_message: Any
         :param context: Other message suitable for troubleshooting errors.
         :type context: Any, optional
         """
 
-        def __init__(self, error_message, context=None):
-            status_code = 500
+        def __init__(self, error_message, status_code=500, context=None):
             super().__init__(status_code, error_message, context=context)

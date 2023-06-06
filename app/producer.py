@@ -29,4 +29,6 @@ def publish_to_kafka(topic, value):
         producer.send(topic=topic, value=value)
         return True
     except KafkaError as exc:
-        raise AppException.OperationError(error_message=f"kafka error with error {exc}")
+        raise AppException.OperationErrorException(
+            error_message=f"kafka error with error {exc}"
+        )

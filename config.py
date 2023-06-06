@@ -67,9 +67,18 @@ class ProductionConfig(BaseConfig):
 
 
 class TestingConfig(BaseConfig):
+    test_db_name: str = ""
+
     @property
-    def SQLALCHEMY_DATABASE_URI(self):
-        return f"sqlite:///{self.db_name}.sqlite3?check_same_thread=False"
+    def SQLALCHEMY_DATABASE_URI(self):  # noqa
+        return "postgresql+psycopg2://{db_user}:{password}@{host}:{port}/{db_name}".format(
+            # noqa
+            db_user=self.db_user,
+            host=self.db_host,
+            password=self.db_password,
+            port=self.db_port,
+            db_name=self.test_db_name,
+        )
 
 
 def get_settings():

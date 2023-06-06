@@ -1,1 +1,1 @@
-from .mock_redis import MockRedisService
+from .mock_keycloak_service import MockKeycloakAuthService

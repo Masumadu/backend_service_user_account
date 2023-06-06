@@ -1,5 +1,4 @@
 import uuid
-from datetime import datetime, timedelta
 
 
 class MockResponse:
@@ -16,9 +15,5 @@ class MockSideEffects:
     json = None
 
     # noinspection PyMethodMayBeStatic
-    def mock_decode_token(self, token_type: str):
-        return {
-            "id": str(uuid.uuid4()),
-            "expires": str(datetime.utcnow() + timedelta(minutes=30)),
-            "token_type": token_type,
-        }
+    def mock_decode_token(self, username):
+        return {"id": str(uuid.uuid4()), "username": username}

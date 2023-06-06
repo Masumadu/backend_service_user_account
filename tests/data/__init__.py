@@ -1,1 +1,1 @@
-from .test_sample_data import SampleTestData
+from .test_user_data import UserTestData

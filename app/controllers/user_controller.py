@@ -232,7 +232,7 @@ class UserController(Notifier):
             return result
         except AppException.NotFoundException:
             raise AppException.BadRequestException(
-                error_message=constants.EXC_INVALID_INPUT("credentials")
+                error_message=constants.EXC_INVALID_INPUT.format("credentials")
             )
 
     def refresh_user_token(self, obj_data: dict) -> Dict:
@@ -424,7 +424,9 @@ class UserController(Notifier):
             self.__create_otp_record(user_id=user.id)
             return {"user_id": user.id}
         except AppException.NotFoundException:
-            raise AppException.NotFoundException(error_message="account does not exist")
+            raise AppException.NotFoundException(
+                error_message=constants.EXC_NOT_FOUND.format("user")
+            )
 
     def send_otp_code(self, sms: bool, email: bool, obj_data: dict) -> Dict:
         """

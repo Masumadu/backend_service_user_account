@@ -62,17 +62,17 @@ repos:
         name: isort (python)
         args: ["--profile", "black"]
 
-#  - repo: local
-#    hooks:
-#      - id: pytest
-#        name: pytest with coverage
-#        language: system
-#        entry: coverage run -m pytest -x
-#        types: [ python ]
-#        pass_filenames: false
-#      - id: coverage
-#        name: check test coverage
-#        language: system
-#        entry: coverage report
-#        types: [ python ]
-#        pass_filenames: false
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest with coverage
+        language: system
+        entry: coverage run -m pytest -x
+        types: [ python ]
+        pass_filenames: false
+      - id: coverage
+        name: check test coverage
+        language: system
+        entry: coverage report
+        types: [ python ]
+        pass_filenames: false

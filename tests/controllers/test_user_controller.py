@@ -127,8 +127,6 @@ class TestUserController(BaseTestCase):
         assert isinstance(result, dict)
         assert self.user_otp_model.otp_code is not None
         assert self.user_otp_model.otp_code_expiration is not None
-        assert self.user_otp_model.sec_token is not None
-        assert self.user_otp_model.sec_token_expiration is not None
         with pytest.raises(AppException.ResourceExistsException) as resource_exist_exc:
             self.user_controller.verify_phone(
                 auth_user=self.mock_decode_token(username=self.user_model.username),

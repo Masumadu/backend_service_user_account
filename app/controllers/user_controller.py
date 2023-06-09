@@ -294,13 +294,11 @@ class UserController(Notifier):
             try:
                 user: UserModel = self.user_repository.find({"username": username})
                 otp_code: str = self.__generate_otp_code(length=6)
-                sec_code: str = self.__generate_security_code(16)
                 expiration: datetime = datetime.now() + timedelta(minutes=5)
                 self.__create_otp_record(
                     user_id=user.id,
                     otp_code=otp_code,
-                    sec_code=sec_code,
-                    expiration=expiration,
+                    otp_expiration=expiration,
                 )
                 self.__sms_otp(code=otp_code, phone=[new_phone])
                 self.__email_otp(code=otp_code, email=[user.email])
@@ -460,13 +458,11 @@ class UserController(Notifier):
         try:
             user: UserModel = self.user_repository.find(filter_param=filter_param)
             otp_code: str = self.__generate_otp_code(length=6)
-            sec_code: str = self.__generate_security_code(16)
             expiration: datetime = datetime.now() + timedelta(minutes=5)
             self.__create_otp_record(
                 user_id=user.id,
                 otp_code=otp_code,
-                sec_code=sec_code,
-                expiration=expiration,
+                otp_expiration=expiration,
             )
             self.__sms_otp(code=otp_code, phone=[user.phone]) if sms else None
             self.__email_otp(code=otp_code, email=[user.email]) if email else None
@@ -507,7 +503,14 @@ class UserController(Notifier):
                 raise AppException.InvalidTokenException(
                     error_message=constants.EXC_EXPIRED_INPUT.format("otp code")
                 )
-            return {"user_id": otp_record.id, "sec_token": otp_record.sec_token}
+            sec_code: str = self.__generate_security_code(length=16)
+            expiration: datetime = datetime.now() + timedelta(minutes=5)
+            self.__create_otp_record(
+                user_id=otp_record.user_id,
+                sec_code=sec_code,
+                sec_expiration=expiration,
+            )
+            return {"user_id": otp_record.user_id, "sec_token": otp_record.sec_token}
         except AppException.NotFoundException:
             raise AppException.NotFoundException(
                 error_message=constants.EXC_NOT_FOUND.format("otp record")
@@ -552,8 +555,9 @@ class UserController(Notifier):
         self,
         user_id: str,
         otp_code: Optional[str] = None,
+        otp_expiration: Optional[datetime] = None,
         sec_code: Optional[str] = None,
-        expiration: Optional[datetime] = None,
+        sec_expiration: Optional[datetime] = None,
     ) -> UserOtpModel:
         """
         Create or update an OTP record for a user.
@@ -576,9 +580,9 @@ class UserController(Notifier):
 
         obj_data = {
             "otp_code": otp_code,
-            "otp_code_expiration": expiration,
+            "otp_code_expiration": otp_expiration,
             "sec_token": sec_code,
-            "sec_token_expiration": expiration,
+            "sec_token_expiration": sec_expiration,
         }
         try:
             result: UserOtpModel = self.user_otp_repository.update(

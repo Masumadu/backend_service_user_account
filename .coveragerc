@@ -1,0 +1,4 @@
+[run]
+omit = migrations/*
+[report]
+fail_under = 80

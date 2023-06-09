@@ -10,8 +10,7 @@ from app.core.database import Base, db, engine
 from app.models import UserModel, UserOtpModel
 from app.repositories import UserOtpRepository, UserRepository
 from tests.data import UserTestData
-from tests.service import MockKeycloakAuthService
-from tests.utils import MockSideEffects
+from tests.utils import MockKeycloakAuthService, MockSideEffects
 
 
 @pytest.mark.usefixtures("app")

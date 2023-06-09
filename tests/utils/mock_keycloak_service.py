@@ -12,6 +12,7 @@ class MockKeycloakAuthService(KeycloakAuthService):
     user_data = {"id": str(uuid.uuid4())}
 
     def get_token(self, *args, **kwargs):
+        # self.tokens["user_id"] = self.user_data.get("id")
         return self.tokens
 
     def refresh_token(self, *args, **kwargs):

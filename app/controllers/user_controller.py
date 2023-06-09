@@ -373,11 +373,11 @@ class UserController(Notifier):
             user: UserModel = self.user_repository.find(
                 filter_param={"username": auth_user.get("username")}
             )
-            self.__confirm_sec_token(user_id=user.id, sec_token=sec_token)
             if not user.verify_password(old_password):
                 raise AppException.BadRequestException(
                     error_message=constants.EXC_INVALID_INPUT.format("credentials")
                 )
+            self.__confirm_sec_token(user_id=user.id, sec_token=sec_token)
             self.user_repository.update_by_id(
                 obj_id=user.id, obj_in={"hash_password": new_password}
             )

@@ -96,6 +96,15 @@ class TestUserController(BaseTestCase):
         with pytest.raises(AppException.BadRequestException) as bad_req_exc:
             self.user_controller.user_login(
                 obj_data={
+                    "username": self.user_model.username,
+                    "password": self.user_test_data.create_user.get("password"),
+                }
+            )
+        assert bad_req_exc.value.status_code == 400
+        assert "invalid" in bad_req_exc.value.error_message
+        with pytest.raises(AppException.BadRequestException) as bad_req_exc:
+            self.user_controller.user_login(
+                obj_data={
                     "username": self.user_test_data.create_user.get("username"),
                     "password": self.user_test_data.create_user.get("password"),
                 }
@@ -174,6 +183,24 @@ class TestUserController(BaseTestCase):
             )
         assert not_found.value.status_code == 404
         assert "not found" in not_found.value.error_message
+        with pytest.raises(AppException.InvalidTokenException) as expired_token_exc:
+            self.user_otp_repository.update_by_id(
+                obj_id=self.user_otp_model.id,
+                obj_in={
+                    "sec_token": "new_token",
+                    "sec_token_expiration": datetime.utcnow() + timedelta(seconds=1),
+                },
+            )
+            sleep(1)
+            self.user_controller.change_phone(
+                obj_data={
+                    "new_phone": self.user_test_data.create_user.get("phone"),
+                    "sec_token": self.user_otp_model.sec_token,
+                },
+                auth_user=self.mock_decode_token(username=self.user_model.username),
+            )
+        assert expired_token_exc.value.status_code == 400
+        assert "expired" in expired_token_exc.value.error_message
 
     @pytest.mark.controller
     def test_change_user_password(self, test_app):
@@ -183,7 +210,10 @@ class TestUserController(BaseTestCase):
             obj_data={"user_id": self.user_model.id},
         )
         self.user_controller.confirm_otp_code(
-            obj_data={"user_id": self.user_model.id, "otp_code": "123456"}
+            obj_data={
+                "user_id": self.user_model.id,
+                "otp_code": self.user_otp_model.otp_code,
+            }
         )
         result = self.user_controller.change_user_password(
             obj_data={
@@ -195,8 +225,8 @@ class TestUserController(BaseTestCase):
         )
         assert result
         assert isinstance(result, dict)
-        with pytest.raises(AppException.NotFoundException) as not_found:
-            self.user_controller.change_phone(
+        with pytest.raises(AppException.BadRequestException) as bad_req_exc:
+            self.user_controller.change_user_password(
                 obj_data={
                     "old_password": self.user_test_data.existing_user.get(
                         "hash_password"
@@ -204,12 +234,23 @@ class TestUserController(BaseTestCase):
                     "new_password": self.user_test_data.create_user.get("password"),
                     "sec_token": self.user_otp_model.sec_token,
                 },
-                auth_user=self.mock_decode_token(
-                    username=self.user_test_data.create_user.get("username")
-                ),
+                auth_user=self.mock_decode_token(username=self.user_model.username),
             )
-        assert not_found.value.status_code == 404
-        assert "not found" in not_found.value.error_message
+        assert bad_req_exc.value.status_code == 400
+        assert "invalid" in bad_req_exc.value.error_message
+        with pytest.raises(AppException.NotFoundException) as not_found_exc:
+            self.user_controller.change_user_password(
+                obj_data={
+                    "old_password": self.user_test_data.existing_user.get(
+                        "hash_password"
+                    ),
+                    "new_password": self.user_test_data.create_user.get("password"),
+                    "sec_token": self.user_otp_model.sec_token,
+                },
+                auth_user=self.mock_decode_token(username=self.user_model.first_name),
+            )
+        assert not_found_exc.value.status_code == 404
+        assert "not found" in not_found_exc.value.error_message
 
     @pytest.mark.controller
     def test_reset_user_password(self, test_app):
@@ -240,6 +281,16 @@ class TestUserController(BaseTestCase):
             )
         assert not_found.value.status_code == 404
         assert "not found" in not_found.value.error_message
+        with pytest.raises(AppException.InvalidTokenException) as invalid_token_exc:
+            self.user_controller.reset_user_password(
+                obj_data={
+                    "user_id": self.user_model.id,
+                    "new_password": self.user_test_data.create_user.get("password"),
+                    "sec_token": self.user_model.username,
+                }
+            )
+        assert invalid_token_exc.value.status_code == 400
+        assert "invalid" in invalid_token_exc.value.error_message
 
     @pytest.mark.controller
     def test_send_otp_code(self, test_app):

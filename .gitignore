@@ -151,6 +151,5 @@ cython_debug/
 *private_key.pem
 *public_key.pub
 
-# ignore docker compose file
-docker-compose-dev*
-.dbdata
+# other files to ignore
+.ignore*

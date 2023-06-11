@@ -25,6 +25,7 @@ faker = "^18.9.0"
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 cryptography = "^41.0.1"
 pytz = "^2023.3"
+requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"

@@ -255,7 +255,7 @@ files = [
 name = "charset-normalizer"
 version = "3.1.0"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7.0"
 files = [
@@ -1665,7 +1665,7 @@ ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"
 name = "requests"
 version = "2.31.0"
 description = "Python HTTP for Humans."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -2039,7 +2039,7 @@ files = [
 name = "urllib3"
 version = "2.0.2"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -2278,4 +2278,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "49dcc016995af324e17fd6fbb5eb4170bbd76ed13670e14abf437649cb6347f4"
+content-hash = "0bb529701f75adfb44a91cebc9dd0a5dae2461af7111bf72d1edc577bbc85a81"

@@ -1,2 +1,7 @@
+from .permission_repository import PermissionRepository
+from .resource_repository import ResourceRepository
+from .role_permission_repository import RolePermissionRepository
+from .role_repository import RoleRepository
 from .user_otp_repository import UserOtpRepository
 from .user_repository import UserRepository
+from .user_role_repository import UserRoleRepository

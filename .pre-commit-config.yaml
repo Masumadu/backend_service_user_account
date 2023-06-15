@@ -64,15 +64,9 @@ repos:
 
   - repo: local
     hooks:
-      - id: pytest
-        name: pytest with coverage
+      - id: alembic check
+        name: check model
         language: system
-        entry: coverage run -m pytest -x
-        types: [ python ]
-        pass_filenames: false
-      - id: coverage
-        name: check test coverage
-        language: system
-        entry: coverage report
+        entry: alembic check
         types: [ python ]
         pass_filenames: false

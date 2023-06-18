@@ -75,8 +75,7 @@ class TestingConfig(BaseConfig):
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):  # noqa
-        return "postgresql+psycopg2://{db_user}:{password}@{host}:{port}/{db_name}".format(
-            # noqa
+        return "postgresql+psycopg2://{db_user}:{password}@{host}:{port}/{db_name}".format(  # noqa
             db_user=self.test_db_user,
             host=self.test_db_host,
             password=self.test_db_password,

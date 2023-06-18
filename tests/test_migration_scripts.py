@@ -8,7 +8,7 @@ from tests.base_test_case import BaseTestCase
 
 class TestMigrationScript(BaseTestCase):
     @pytest.mark.model
-    def test_migration_scripts_single_head(self):
+    def test_migration_scripts_single_head(self, test_app):
         config = Config()
         config.set_main_option("script_location", f"{APP_ROOT}/migrations")
         script = ScriptDirectory.from_config(config)

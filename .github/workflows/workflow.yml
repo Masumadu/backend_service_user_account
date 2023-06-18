@@ -85,6 +85,14 @@ jobs:
         run: |
           poetry run python -m pytest -v tests
 
+      - name: Check overall coverage
+        run: |
+          poetry run coverage report
+
+      - name: Check file coverage
+        run: |
+          ./file_test_coverage.sh
+
   docker:
     needs: build
     runs-on: ubuntu-latest

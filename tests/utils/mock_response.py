@@ -16,4 +16,4 @@ class MockSideEffects:
 
     # noinspection PyMethodMayBeStatic
     def mock_decode_token(self, username):
-        return {"id": str(uuid.uuid4()), "username": username}
+        return {"user_id": str(uuid.uuid4()), "username": username}

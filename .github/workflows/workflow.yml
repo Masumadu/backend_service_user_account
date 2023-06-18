@@ -83,7 +83,7 @@ jobs:
 
       - name: Test with pytest
         run: |
-          poetry run python -m pytest -v tests
+          poetry run coverage run -m pytest -v tests
 
       - name: Check overall coverage
         run: |
